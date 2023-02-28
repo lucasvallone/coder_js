@@ -12,7 +12,7 @@ if (recProductos != null) {
 renderizarCarrito()
 settearEventos()
 
-
+//crea el producto que va a ser enviado al carrito capturandolo del html
 function crearProducto(e) {
 
     let hijo = e.target
@@ -32,12 +32,12 @@ function crearProducto(e) {
 
     return producto
 }
-
+//carga los productos en el localStorage
 function actualizarLocalStorage() {
     let carritoLocalStorage = JSON.stringify(carritoCargado);
     localStorage.setItem("productos", carritoLocalStorage);
 }
-
+//añade productos al carrito si ese producto ya esta aumenta solo la cantidad
 function añadirAlCarrito(producto) {
 
     let productoDuplicado = comprobarDuplicado(producto)
@@ -51,7 +51,7 @@ function añadirAlCarrito(producto) {
     }
     actualizarLocalStorage()
 }
-
+//aumena la cantidad del producto
 function aumentarCantidad(producto) {
 
     for (let productoCarrito of carritoCargado) {
@@ -60,7 +60,7 @@ function aumentarCantidad(producto) {
         }
     }
 }
-
+//comprueba si ya hay un producto igual en el carrito
 function comprobarDuplicado(producto) {
 
     for (let productoCarrito of carritoCargado) {
@@ -72,7 +72,7 @@ function comprobarDuplicado(producto) {
     return false
 }
 
-
+//comprueba si hay un producto ya cargado en el carrito 
 function comprobarcantidad(nombreProducto) {
 
     for (let productoCarrito of carritoCargado) {
@@ -84,7 +84,7 @@ function comprobarcantidad(nombreProducto) {
 
     return false
 }
-
+//elimina el producto seleccionado o resta uno del carrito
 function eliminarDelCarrito(nombreProducto) {
 
     let cantidadMayorAUno = comprobarcantidad(nombreProducto)
@@ -102,14 +102,14 @@ function eliminarDelCarrito(nombreProducto) {
     }
     actualizarLocalStorage()
 }
-
+//vacia el carrito y lo carga en localStorage
 function vaciarCarrito() {
 
     carritoCargado = []
 
     actualizarLocalStorage()
 }
-
+//renderiza los productos en el carrito
 function renderizarCarrito() {
 
     let tabla = document.getElementById("tbody");
@@ -135,7 +135,7 @@ function renderizarCarrito() {
     setEventoBorrarProductos()
 
 }
-
+//captura el producto del html y lo borra del carrito
 function setEventoBorrarProductos() {
     let borrar = document.querySelectorAll("#borrarProd");
     for (let btn of borrar) {
@@ -150,7 +150,7 @@ function setEventoBorrarProductos() {
         });
     }
 }
-
+//resta los productos en caso de haber mas de 1
 function restarCantidad(nombreProducto) {
     for (let productoCarrito of carritoCargado) {
         if (productoCarrito.nombre === nombreProducto) {
@@ -159,7 +159,7 @@ function restarCantidad(nombreProducto) {
     }
 }
 
-
+//Calcula el total del carrito
 function getTotalCarrito() {
 
     let totalCarrito = 0
@@ -168,21 +168,11 @@ function getTotalCarrito() {
         totalCarrito += producto.precio * producto.cantidad
     }
     return totalCarrito
+
 }
-
-function mostrarCarrito() {
-
-    let carrito = document.getElementById("carrito")
-    if (carrito.style.display != "none"){
-        carrito.style.display = "none"
-    } 
-    else{
-        carrito.style.display = "block"
-    }
-}
-
+//Setteo todos los botones de la pagina
 function settearEventos() {
-
+//captura el boton de comprar
     let compra = document.querySelectorAll("#comprar")
     for (let boton of compra) {
         boton.addEventListener("click", function (e) {
@@ -191,9 +181,9 @@ function settearEventos() {
             renderizarCarrito()
         });
     }
-
+//capruta el boton de borrar los productos
     setEventoBorrarProductos()
-
+//captura el boton de vaciar el carrito
     let vaciar = document.getElementById("vaciarCarrito")
     vaciar.addEventListener("click", function () {
         vaciarCarrito()
